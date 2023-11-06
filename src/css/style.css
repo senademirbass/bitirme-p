@@ -262,6 +262,25 @@ a:focus {
   border-radius: 50%;
   object-fit: cover;
 }
+
+.slider_img {
+  width: 30%;
+  position: relative;
+  object-fit: cover;
+}
+
+.slider_text {
+  display: flex;
+  flex-wrap: wrap;
+  font-family: "Agbalumo";
+  color: crimson;
+}
+
+.slider_home {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-around;
+}
 .slider_section {
   -webkit-box-flex: 1;
   -ms-flex: 1;
