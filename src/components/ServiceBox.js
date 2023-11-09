@@ -1,6 +1,24 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
+import Popup from "reactjs-popup";
 
-const ServiceBox = ({ imageSrc, title, description }) => {
+const ServiceBox = ({ id, imageSrc, title, description }) => {
+  const [popupContent, setPopupContent] = useState("");
+
+  useEffect(() => {
+    // This block will be executed after popupContent is updated
+    console.log("Popup content updated:", popupContent);
+  }, [popupContent]);
+
+  function handleOpenPopup() {
+    if (id === 0) {
+      setPopupContent("DŞLSKFLŞDKLFŞ");
+    } else if (id === 1) {
+      setPopupContent("nnnnnn");
+    } else if (id === 2) {
+      setPopupContent("SSSSSSSSSSSSSSSSSSSSSSSSSSSSS");
+    }
+  }
+
   return (
     <>
       <div className="col-md-4">
@@ -11,11 +29,19 @@ const ServiceBox = ({ imageSrc, title, description }) => {
           <div className="detail-box">
             <h5 className="homePage_services_titles">{title}</h5>
             <p className="homePage_services_descs">{description}</p>
-            <button className="homePage_services_buttons">
-              {" "}
-              Daha Fazla{" "}
-            </button>{" "}
-            {/* Bu kısma bilgilerinde için modal eklenecek, burası button olacak */}
+            <Popup
+              trigger={
+                <button className="openModal_button" onClick={handleOpenPopup}>
+                  Daha Fazla
+                </button>
+              }
+              modal
+              nested
+            >
+              <div>
+                <p style={{ color: "black" }}>SENA: {popupContent}</p>
+              </div>
+            </Popup>
           </div>
         </div>
       </div>

@@ -6,18 +6,21 @@ const ServiceSectionHome = () => {
   const titleClassName = "custom-title";
   const services = [
     {
+      id: 0,
       imageSrc: "/yardım_icons/yardım_iste.png",
       title: "NEYE İHTİYACIN VAR?",
       description:
         "Yardıma ihtiyacın olan konu için bir ilan aç, gönüllülerle iletişime geç, sana en uygun çözümü bul!",
     },
     {
+      id: 1,
       imageSrc: "/yardım_icons/yardım_et.png",
       title: "NASIL YARDIM EDEBİLİRİM?",
       description:
         "İnsanlara yardım etmek istiyorsan gönüllü olabilir, ilanlardan yapabileceğin yardımı seçebilirsin!",
     },
     {
+      id: 2,
       imageSrc: "/yardım_icons/bagıs.png",
       title: "YARDIM KURULUŞU İSEK?",
       description:
