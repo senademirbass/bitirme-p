@@ -35,17 +35,12 @@ export default function Header() {
                 </li>
                 <li className="nav-item">
                   <a className="nav-link">
-                    <Link to="/services">Hizmetler</Link>
-                  </a>
-                </li>
-                <li className="nav-item">
-                  <a className="nav-link">
                     <Link to="/team">Ekibimiz</Link>
                   </a>
                 </li>
                 <li className="nav-item">
                   <a className="nav-link">
-                    <Link to="/login">Giriş Yap</Link>
+                    <Link to="/login">Giriş Yap | Üye Ol</Link>
                   </a>
                 </li>
               </ul>

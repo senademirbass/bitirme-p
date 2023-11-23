@@ -7,6 +7,81 @@ body {
   overflow-x: hidden;
 }
 
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+/*-----------GİRİS FORM------------------------------*/
+
+/* Form Container */
+.giris,
+.uyeOl {
+  width: 500px;
+  margin: 0 auto;
+  padding: 20px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  background-color: azure;
+}
+
+/* Form Input */
+.giris input,
+.uyeOl input[type="text"],
+.giris input,
+.uyeOl input[type="email"],
+.giris input,
+.uyeOl input[type="password"] {
+  width: 100%;
+  padding: 8px;
+  margin-bottom: 15px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  box-sizing: border-box;
+}
+
+/* Remember Me Checkbox Label */
+.giris label input[type="checkbox"] {
+  margin-right: 5px;
+  vertical-align: middle;
+}
+
+/* Submit Button */
+.giris button,
+.uyeOl button {
+  width: 100%;
+  padding: 10px;
+  border: none;
+  border-radius: 4px;
+  background-color: #007bff;
+  color: white;
+  cursor: pointer;
+}
+
+/* Submit Button Hover */
+.giris button,
+.uyeOl button:hover {
+  background-color: #0056b3;
+}
+
+@media screen and (min-width: 400px) {
+  .giris,
+  .uyeOl {
+    flex-direction: column; /* Büyük ekranlarda yan yana sıralamak için */
+    margin-bottom: 0;
+    margin-right: 20px;
+  }
+}
+
+@media screen and (min-width: 800px) {
+  .giris,
+  .uyeOl {
+    flex-direction: column; /* Büyük ekranlarda yan yana sıralamak için */
+    margin-bottom: 0;
+    margin-right: 20px;
+  }
+}
 /*----------------HOME PAGE MODAL--------------------*/
 .openModal_button:focus {
   outline: 0;
@@ -840,6 +915,12 @@ a:focus {
   justify-content: center;
 }
 
+.member {
+  display: flex;
+  justify-content: center;
+  width: 60%;
+  height: 40%;
+}
 .team_section .team_container {
   padding: 0 15px;
 }

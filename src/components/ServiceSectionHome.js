@@ -40,6 +40,7 @@ const ServiceSectionHome = () => {
             {services.map((service, index) => (
               <ServiceBox
                 key={index}
+                id={service.id}
                 imageSrc={service.imageSrc}
                 title={service.title}
                 description={service.description}

@@ -51,11 +51,6 @@ function Footer() {
                     </Link>
                   </a>
                   <a>
-                    <Link style={{ color: "#002b64" }} to="/services">
-                      Hizmetler
-                    </Link>
-                  </a>
-                  <a>
                     <Link style={{ color: "#002b64" }} to="/team">
                       Ekibimiz
                     </Link>

@@ -9,13 +9,17 @@ const ServiceBox = ({ id, imageSrc, title, description }) => {
     console.log("Popup content updated:", popupContent);
   }, [popupContent]);
 
-  function handleOpenPopup() {
+  function handleOpenPopup(id) {
+    console.log("Clicked id:", id);
+
     if (id === 0) {
       setPopupContent("DŞLSKFLŞDKLFŞ");
     } else if (id === 1) {
       setPopupContent("nnnnnn");
     } else if (id === 2) {
       setPopupContent("SSSSSSSSSSSSSSSSSSSSSSSSSSSSS");
+    } else {
+      console.log("ID didn't match any condition:", id);
     }
   }
 
@@ -39,7 +43,7 @@ const ServiceBox = ({ id, imageSrc, title, description }) => {
               nested
             >
               <div>
-                <p style={{ color: "black" }}>SENA: {popupContent}</p>
+                <p style={{ color: "black" }}>{popupContent}</p>
               </div>
             </Popup>
           </div>
