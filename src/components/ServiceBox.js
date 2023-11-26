@@ -1,54 +1,47 @@
 import React, { useState, useEffect } from "react";
-import Popup from "reactjs-popup";
+import Modal from "react-modal";
+import "../css/style.css";
+import { FaWindowClose } from "react-icons/fa";
 
-const ServiceBox = ({ id, imageSrc, title, description }) => {
-  const [popupContent, setPopupContent] = useState("");
+const ServiceBox = ({ id, imageSrc, title, description, content }) => {
+  const [isModalOpen, setModalIsOpen] = useState(false);
 
-  useEffect(() => {
-    // This block will be executed after popupContent is updated
-    console.log("Popup content updated:", popupContent);
-  }, [popupContent]);
+  const openModal = () => {
+    setModalIsOpen(true);
+  };
 
-  function handleOpenPopup(id) {
-    console.log("Clicked id:", id);
-
-    if (id === 0) {
-      setPopupContent("DŞLSKFLŞDKLFŞ");
-    } else if (id === 1) {
-      setPopupContent("nnnnnn");
-    } else if (id === 2) {
-      setPopupContent("SSSSSSSSSSSSSSSSSSSSSSSSSSSSS");
-    } else {
-      console.log("ID didn't match any condition:", id);
-    }
-  }
+  const closeModal = () => {
+    setModalIsOpen(false);
+  };
 
   return (
     <>
       <div className="col-md-4">
         <div className="box">
           <div className="img-box">
-            <img src={imageSrc} alt="" />
+            <img src={imageSrc} alt="modal-image" />
           </div>
           <div className="detail-box">
             <h5 className="homePage_services_titles">{title}</h5>
             <p className="homePage_services_descs">{description}</p>
-            <Popup
-              trigger={
-                <button className="openModal_button" onClick={handleOpenPopup}>
-                  Daha Fazla
-                </button>
-              }
-              modal
-              nested
-            >
-              <div>
-                <p style={{ color: "black" }}>{popupContent}</p>
-              </div>
-            </Popup>
+            <button className="openModal_button" onClick={openModal}>
+              Daha Fazla
+            </button>
           </div>
         </div>
       </div>
+      <Modal
+        isOpen={isModalOpen}
+        onRequestClose={closeModal}
+        contentLabel={`Modal ${id}`}
+        className="modalStyle"
+      >
+        <h2 className="modalTitleStyle">{title}</h2>
+        <p className="modalContentStyle">{content}</p>
+        <button className="modalButtonStyle" onClick={closeModal}>
+          Kapat
+        </button>
+      </Modal>
     </>
   );
 };
