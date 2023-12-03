@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import Signup from "./NewMember";
+import "../css/proje.css";
 
 const Login = () => {
   const [usernameOrEmail, setUsernameOrEmail] = useState("");
@@ -25,17 +26,16 @@ const Login = () => {
         <div style={{ marginTop: 30 }}>
           <h2>Giriş Yap</h2>
           <form className="giris" onSubmit={handleLogin}>
-            <div>
+            <div style={{ display: "flex", flexDirection: "row" }}>
               <label>Kullanıcı Adı veya E-posta:</label>
               <input
                 className="giris input"
                 type="text"
                 value={usernameOrEmail}
                 onChange={(e) => setUsernameOrEmail(e.target.value)}
-                placeholder="example@....com"
               />
             </div>
-            <div>
+            <div style={{ display: "flex", flexDirection: "row" }}>
               <label>Şifre:</label>
               <input
                 className="giris input"
@@ -44,17 +44,19 @@ const Login = () => {
                 onChange={(e) => setPassword(e.target.value)}
               />
             </div>
-            <div>
-              <label>
-                <input
-                  type="checkbox"
-                  checked={rememberMe}
-                  onChange={() => setRememberMe(!rememberMe)}
-                />
-                Beni Hatırla
-              </label>
+            <div
+              style={{
+                display: "flex",
+              }}
+            >
+              <input
+                type="checkbox"
+                checked={rememberMe}
+                onChange={() => setRememberMe(!rememberMe)}
+              />
+              <label>Beni Hatırla</label>
             </div>
-            <button className="giris button" type="submit">
+            <button className="button-form" type="submit">
               Giriş Yap
             </button>
           </form>

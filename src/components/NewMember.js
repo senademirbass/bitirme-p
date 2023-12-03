@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import "../css/proje.css";
 
 const Signup = () => {
   const [newUsername, setNewUsername] = useState("");
@@ -19,7 +20,7 @@ const Signup = () => {
       <div style={{ marginTop: 30, marginBottom: 20 }}>
         <h2>Üye Ol</h2>
         <form className="uyeOl" onSubmit={handleSignup}>
-          <div>
+          <div style={{ display: "flex", flexDirection: "row" }}>
             <label>Kullanıcı Adı:</label>
             <input
               className="uyeOl input"
@@ -28,16 +29,17 @@ const Signup = () => {
               onChange={(e) => setNewUsername(e.target.value)}
             />
           </div>
-          <div>
+          <div style={{ display: "flex", flexDirection: "row" }}>
             <label>E-posta:</label>
             <input
               className="uyeOl input"
               type="email"
               value={newEmail}
+              placeholder="example@....com"
               onChange={(e) => setNewEmail(e.target.value)}
             />
           </div>
-          <div>
+          <div style={{ display: "flex", flexDirection: "row" }}>
             <label>Şifre:</label>
             <input
               className="uyeOl input"
@@ -46,7 +48,7 @@ const Signup = () => {
               onChange={(e) => setNewPassword(e.target.value)}
             />
           </div>
-          <button className="uyeOl button" type="submit">
+          <button className="button-form" type="submit">
             Üye Ol
           </button>
         </form>

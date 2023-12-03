@@ -1,7 +1,6 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import Modal from "react-modal";
 import "../css/style.css";
-import { FaWindowClose } from "react-icons/fa";
 
 const ServiceBox = ({ id, imageSrc, title, description, content }) => {
   const [isModalOpen, setModalIsOpen] = useState(false);

@@ -1,6 +1,6 @@
 import "./App.css";
-import React from "react";
-import { Route, Routes } from "react-router-dom";
+import React, { useEffect } from "react";
+import { Route, Routes, useNavigate } from "react-router-dom";
 import Header from "./components/Header";
 import Hakkımızda from "./components/Hakkımızda";
 import Ekip from "./components/Ekip";
@@ -9,6 +9,10 @@ import Footer from "./components/Footer";
 import Home from "./components/Home";
 
 function App() {
+  const navigate = useNavigate();
+  useEffect(() => {
+    navigate("/home");
+  }, [navigate]);
   return (
     <div className="App">
       <Header />
