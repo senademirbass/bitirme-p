@@ -1,5 +1,5 @@
 import "./App.css";
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { Route, Routes, useNavigate } from "react-router-dom";
 import Header from "./components/Header";
 import Hakkımızda from "./components/Hakkımızda";
@@ -9,12 +9,26 @@ import Footer from "./components/Footer";
 import Home from "./components/Home";
 
 function App() {
-  const navigate = useNavigate();
+  const [backendData, setBackEndData] = useState([{}]);
+
+  useEffect(() => {
+    fetch("/api")
+      .then((response) => response.json())
+      .then((data) => {
+        setBackEndData(data);
+      });
+  }, []);
+  /*const navigate = useNavigate();
   useEffect(() => {
     navigate("/home");
-  }, [navigate]);
+  }, [navigate]);*/
   return (
     <div className="App">
+      {typeof backendData.users === "undefined" ? (
+        <p>Loading...</p>
+      ) : (
+        backendData.users.map((user, i) => <p key={i}>{user}</p>)
+      )}
       <Header />
       <Routes>
         <Route path="/home" element={<Home />} />
