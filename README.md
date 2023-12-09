@@ -6,7 +6,7 @@ Bu proje Kocaeli Üniversitesi, Bilişim Sistemleri Bölümü'nde "Bitirme Proje
 ### Front End
  Projenin front end tasarımının HTML ve CSS kısmı için hazır bir şablondan yararlanılmaktadır. 
  - https://www.free-css.com/free-css-templates/page296/finexo
-Front end kısmının dinamikleştirilmesinde ise Javascript'in React kütüphanesi kullanılmaktadır.
+ - Front end kısmının dinamikleştirilmesinde ise Javascript'in React kütüphanesi kullanılmaktadır.
 
 ### Back End
 Projenin back endi için Node.js ve Express kullanılmaktadır.
