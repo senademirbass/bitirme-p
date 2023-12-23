@@ -1,18 +1,42 @@
 import React, { useState } from "react";
-import Signup from "./NewMember";
+import { useNavigate } from "react-router-dom";
 import "../css/proje.css";
 
-const Login = () => {
-  const [usernameOrEmail, setUsernameOrEmail] = useState("");
+const Login = ({ onLogin }) => {
+  const navigate = useNavigate();
+  const [userMail, setUserMail] = useState("");
   const [password, setPassword] = useState("");
-  const [rememberMe, setRememberMe] = useState(false);
 
-  const handleLogin = (e) => {
+  const handleLogin = async (e) => {
     e.preventDefault();
+
+    try {
+      const response = await fetch("http://localhost:3001/api/login", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ userMail, password }),
+      });
+      if (response.ok) {
+        const data = await response.json();
+        console.log("Giriş Başarılı:", data.message);
+        // Kullanıcı durumunu güncelleme, yönlendirme yapma vb. işlemler
+        onLogin();
+        navigate("/profile");
+      } else {
+        const errorData = await response.json();
+        console.error("Giriş Hatası:", errorData.message);
+        // Hata mesajını kullanıcıya gösterme veya başka işlemler
+      }
+    } catch (error) {
+      console.error("İstek Hatası:", error.message);
+      // İstek hatası durumunda başka işlemler
+    }
+
     // Burada giriş yapma işlemleri gerçekleştirilebilir
-    console.log("Username/Email:", usernameOrEmail);
+    console.log("Email:", userMail);
     console.log("Password:", password);
-    console.log("Remember Me:", rememberMe);
   };
   return (
     <>
@@ -27,12 +51,12 @@ const Login = () => {
           <h2>Giriş Yap</h2>
           <form className="giris" onSubmit={handleLogin}>
             <div style={{ display: "flex", flexDirection: "row" }}>
-              <label>Kullanıcı Adı veya E-posta:</label>
+              <label>E-posta:</label>
               <input
                 className="giris input"
                 type="text"
-                value={usernameOrEmail}
-                onChange={(e) => setUsernameOrEmail(e.target.value)}
+                value={userMail}
+                onChange={(e) => setUserMail(e.target.value)}
               />
             </div>
             <div style={{ display: "flex", flexDirection: "row" }}>
@@ -44,24 +68,11 @@ const Login = () => {
                 onChange={(e) => setPassword(e.target.value)}
               />
             </div>
-            <div
-              style={{
-                display: "flex",
-              }}
-            >
-              <input
-                type="checkbox"
-                checked={rememberMe}
-                onChange={() => setRememberMe(!rememberMe)}
-              />
-              <label>Beni Hatırla</label>
-            </div>
             <button className="button-form" type="submit">
               Giriş Yap
             </button>
           </form>
         </div>
-        <Signup />
       </div>
     </>
   );

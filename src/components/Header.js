@@ -3,7 +3,7 @@ import { Link } from "react-router-dom";
 import "../css/style.css";
 import "../css/bootstrap.css";
 
-export default function Header() {
+export default function Header({ isLoggedIn }) {
   const pageName = "İyilik Denizi";
   const pageNameStyle = {
     fontSize: "40px",
@@ -38,11 +38,38 @@ export default function Header() {
                     <Link to="/team">Ekibimiz</Link>
                   </a>
                 </li>
-                <li className="nav-item">
-                  <a className="nav-link">
-                    <Link to="/login">Giriş Yap | Üye Ol</Link>
-                  </a>
-                </li>
+                {isLoggedIn ? (
+                  <>
+                    <li className="nav-item">
+                      <a className="nav-link">
+                        <Link to="/login">Profilim</Link>
+                      </a>
+                    </li>
+                    <li className="nav-item">
+                      <a className="nav-link">
+                        <Link to="/signup">İlanlarım</Link>
+                      </a>
+                    </li>
+                    <li className="nav-item">
+                      <a className="nav-link">
+                        <Link to="/todo">Yapılacaklar</Link>
+                      </a>
+                    </li>
+                  </>
+                ) : (
+                  <>
+                    <li className="nav-item">
+                      <a className="nav-link">
+                        <Link to="/login">Giriş</Link>
+                      </a>
+                    </li>
+                    <li className="nav-item">
+                      <a className="nav-link">
+                        <Link to="/signup">Üye Ol</Link>
+                      </a>
+                    </li>
+                  </>
+                )}
               </ul>
             </div>
           </nav>

@@ -29,6 +29,7 @@ body {
 /* Form Input */
 .giris input,
 .uyeOl input[type="text"],
+.uyeOl input[type="number"],
 .giris input,
 .uyeOl input[type="email"],
 .giris input,
