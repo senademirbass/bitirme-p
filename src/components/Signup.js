@@ -10,6 +10,7 @@ const Signup = () => {
   const [userAddress, setUserAddress] = useState("");
   const [userPassword, setUserPassword] = useState("");
   const [userType, setUserType] = useState("");
+  const [userNickName, setUserNickName] = useState("");
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -23,6 +24,7 @@ const Signup = () => {
         userAddress,
         userPassword,
         userType,
+        userNickName,
       });
       console.log("Kayıt başarılı", response.data);
     } catch (error) {
@@ -42,7 +44,7 @@ const Signup = () => {
         <h2>Üye Ol</h2>
         <form className="uyeOl" onSubmit={handleSubmit}>
           <div style={{ display: "flex", flexDirection: "row" }}>
-            <label>Kullanıcı Adı:</label>
+            <label>Kullanıcı isim:</label>
             <input
               className="uyeOl input"
               type="text"
@@ -51,7 +53,7 @@ const Signup = () => {
             />
           </div>
           <div style={{ display: "flex", flexDirection: "row" }}>
-            <label>Kullanıcı Soyadı:</label>
+            <label>Kullanıcı soyisim:</label>
             <input
               className="uyeOl input"
               type="text"
@@ -103,6 +105,15 @@ const Signup = () => {
               type="text"
               value={userType}
               onChange={(e) => setUserType(e.target.value)}
+            />
+          </div>
+          <div style={{ display: "flex", flexDirection: "row" }}>
+            <label>Kullanıcı Adı</label>
+            <input
+              className="uyeOl input"
+              type="text"
+              value={userNickName}
+              onChange={(e) => setUserNickName(e.target.value)}
             />
           </div>
           <button className="button-form" type="submit">

@@ -24,34 +24,34 @@ export default function Header({ isLoggedIn }) {
             >
               <ul className="navbar-nav">
                 <li className="nav-item">
-                  <a className="nav-link">
+                  <a href="#" className="nav-link">
                     <Link to="/home">Ana Sayfa</Link>
                   </a>
                 </li>
                 <li className="nav-item">
-                  <a className="nav-link">
+                  <a href="#" className="nav-link">
                     <Link to="/about">Hakkımızda</Link>
                   </a>
                 </li>
                 <li className="nav-item">
-                  <a className="nav-link">
+                  <a href="#" className="nav-link">
                     <Link to="/team">Ekibimiz</Link>
                   </a>
                 </li>
                 {isLoggedIn ? (
                   <>
                     <li className="nav-item">
-                      <a className="nav-link">
-                        <Link to="/login">Profilim</Link>
+                      <a href="#" className="nav-link">
+                        <Link to="/profile">Profilim</Link>
                       </a>
                     </li>
                     <li className="nav-item">
-                      <a className="nav-link">
-                        <Link to="/signup">İlanlarım</Link>
+                      <a href="#" className="nav-link">
+                        <Link to="/myads">İlanlarım</Link>
                       </a>
                     </li>
                     <li className="nav-item">
-                      <a className="nav-link">
+                      <a href="#" className="nav-link">
                         <Link to="/todo">Yapılacaklar</Link>
                       </a>
                     </li>
@@ -59,12 +59,12 @@ export default function Header({ isLoggedIn }) {
                 ) : (
                   <>
                     <li className="nav-item">
-                      <a className="nav-link">
+                      <a href="#" className="nav-link">
                         <Link to="/login">Giriş</Link>
                       </a>
                     </li>
                     <li className="nav-item">
-                      <a className="nav-link">
+                      <a href="#" className="nav-link">
                         <Link to="/signup">Üye Ol</Link>
                       </a>
                     </li>

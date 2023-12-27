@@ -4,7 +4,7 @@ import "../css/proje.css";
 
 const Login = ({ onLogin }) => {
   const navigate = useNavigate();
-  const [userMail, setUserMail] = useState("");
+  const [nickname, setNickname] = useState("");
   const [password, setPassword] = useState("");
 
   const handleLogin = async (e) => {
@@ -16,7 +16,7 @@ const Login = ({ onLogin }) => {
         headers: {
           "Content-Type": "application/json",
         },
-        body: JSON.stringify({ userMail, password }),
+        body: JSON.stringify({ nickname, password }),
       });
       if (response.ok) {
         const data = await response.json();
@@ -35,7 +35,7 @@ const Login = ({ onLogin }) => {
     }
 
     // Burada giriş yapma işlemleri gerçekleştirilebilir
-    console.log("Email:", userMail);
+    console.log("Kullanıcı Adı:", nickname);
     console.log("Password:", password);
   };
   return (
@@ -51,12 +51,12 @@ const Login = ({ onLogin }) => {
           <h2>Giriş Yap</h2>
           <form className="giris" onSubmit={handleLogin}>
             <div style={{ display: "flex", flexDirection: "row" }}>
-              <label>E-posta:</label>
+              <label>Kullanıcı Adı</label>
               <input
                 className="giris input"
                 type="text"
-                value={userMail}
-                onChange={(e) => setUserMail(e.target.value)}
+                value={nickname}
+                onChange={(e) => setNickname(e.target.value)}
               />
             </div>
             <div style={{ display: "flex", flexDirection: "row" }}>
