@@ -2,29 +2,21 @@ import mysql2 from "mysql2";
 import express from "express";
 import bodyParser from "body-parser";
 import cors from "cors";
-import bcrypt from "bcrypt";
 import session from "express-session";
-import MySQLStore from "express-mysql-session";
 
 const app = express();
+const port = 3001;
 
-const dbOptions = {
-  host: "localhost",
-  user: "root",
-  password: "sena123",
-  database: "bitirme",
-};
-const sessionStore = new MySQLStore(dbOptions);
-app.use(
+app.use(bodyParser.json());
+
+/*app.use(
   session({
     secret: "KksEQPjP6l", // Güvenli bir rastgele anahtar
     resave: false,
     saveUninitialized: true,
     store: sessionStore,
   })
-);
-
-const port = 3001;
+);*/
 
 const db = mysql2.createConnection({
   host: "localhost",
@@ -39,7 +31,6 @@ db.connect((err) => {
   console.log("Mysql bağlantısı başarılı");
 });
 
-app.use(bodyParser.json());
 app.use(
   cors({
     origin: "http://localhost:3000",
@@ -77,40 +68,42 @@ app.post("/register", (req, res) => {
   });
 });
 
-//LOGIN
-// Kullanıcı girişi
-app.post("/api/login", (req, res) => {
+// Kullanıcı modeli
+const User = {
+  findByNicknameAndPassword: (nickname, password) => {
+    return new Promise((resolve, reject) => {
+      db.query(
+        "SELECT * FROM users WHERE user_nickname = ? AND user_password = ?",
+        [nickname, password],
+        (err, results) => {
+          if (err) {
+            return reject(err);
+          }
+          resolve(results[0]);
+        }
+      );
+    });
+  },
+};
+// Login endpoint'i
+app.post("/api/login", async (req, res) => {
   const { nickname, password } = req.body;
 
-  const query =
-    "SELECT user_id, user_nickname FROM users WHERE user_nickname = ? AND user_password = ?";
+  try {
+    const user = await User.findByNicknameAndPassword(nickname, password);
 
-  db.query(query, [nickname, password], (err, result) => {
-    if (err) {
-      console.error("Giriş başarısız.", err);
-      res.status(500).send("Giriş başarısız.");
+    if (user) {
+      res.json({ message: "Giriş Başarılı" });
     } else {
-      if (result.length > 0) {
-        const userId = result[0].user_id;
-        const userNickname = result[0].user_nickname;
-
-        req.session.userNickname = userNickname; // Oturum verilerine kullanıcı adını ekle
-
-        console.log("Kullanıcının ID'si:", userId);
-        console.log("Oturuma eklenen kullanıcı adı (nickname):", userNickname);
-
-        console.log("Sorgu Sonucu:", result);
-        console.log("user_nickname Değeri:", result[0].user_nickname);
-
-        res.json({ success: true, message: "Giriş başarılı", userId });
-      } else {
-        res.status(401).json("E-posta veya şifre hatalı.");
-      }
+      res.status(401).json({ message: "Kullanıcı adı veya şifre hatalı" });
     }
-  });
+  } catch (error) {
+    console.error(error.message);
+    res.status(500).json({ message: "Sunucu hatası" });
+  }
 });
 
-// Kullanıcı profil bilgilerini getirme
+/* Kullanıcı profil bilgilerini getirme
 app.get("/api/profile", (req, res) => {
   const userNickname = req.session.userNickname; // Güncelleme burada
   console.log("Oturumdan alınan kullanıcı adı (nickname):", userNickname);
@@ -142,8 +135,7 @@ app.get("/api/profile", (req, res) => {
       }
     }
   });
-});
-
+});*/
 app.listen(port, () => {
   console.log(`Server ${port} portunda çalışıyor`);
 });

@@ -90,7 +90,7 @@ const Signup = () => {
             />
           </div>
           <div style={{ display: "flex", flexDirection: "row" }}>
-            <label>Şifre</label>
+            <label>Şifre:</label>
             <input
               className="uyeOl input"
               type="password"
@@ -99,7 +99,7 @@ const Signup = () => {
             />
           </div>
           <div style={{ display: "flex", flexDirection: "row" }}>
-            <label>Kullanıcı Türü</label>
+            <label>Kullanıcı Türü:</label>
             <input
               className="uyeOl input"
               type="text"
@@ -108,7 +108,7 @@ const Signup = () => {
             />
           </div>
           <div style={{ display: "flex", flexDirection: "row" }}>
-            <label>Kullanıcı Adı</label>
+            <label>Kullanıcı Adı:</label>
             <input
               className="uyeOl input"
               type="text"

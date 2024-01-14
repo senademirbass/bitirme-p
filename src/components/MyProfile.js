@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from "react";
+import "../css/proje.css";
 
 function MyProfile() {
   const [userData, setUserData] = useState({
@@ -21,7 +22,7 @@ function MyProfile() {
     { label: "Kullanıcı Adı", key: "userNickName", type: "text" },
   ];
 
-  useEffect(() => {
+  /*useEffect(() => {
     fetch("http://localhost:3001/api/profile", {
       method: "GET",
     })
@@ -38,11 +39,13 @@ function MyProfile() {
       .catch((error) => {
         console.error(error.message);
       });
-  }, []);
+  }, []);*/
+
   return (
-    <>
-      <h1>PROFİLİM</h1>
-      <form>
+    <div className="bodyBox">
+      <form className="form">
+        <h1 className="profileTitle">Profil Bilgileri</h1>
+        <hr></hr>
         {formFields.map((field) => (
           <div key={field.key}>
             <label>{field.label}:</label>
@@ -50,7 +53,7 @@ function MyProfile() {
           </div>
         ))}
       </form>
-    </>
+    </div>
   );
 }
 
