@@ -50,6 +50,7 @@ const Signup = () => {
               type="text"
               value={userName}
               onChange={(e) => setUserName(e.target.value)}
+              required
             />
           </div>
           <div style={{ display: "flex", flexDirection: "row" }}>
@@ -59,6 +60,7 @@ const Signup = () => {
               type="text"
               value={userSurname}
               onChange={(e) => setUserSurname(e.target.value)}
+              required
             />
           </div>
           <div style={{ display: "flex", flexDirection: "row" }}>
@@ -69,6 +71,7 @@ const Signup = () => {
               value={userMail}
               placeholder="example@....com"
               onChange={(e) => setUserMail(e.target.value)}
+              required
             />
           </div>
           <div style={{ display: "flex", flexDirection: "row" }}>
@@ -78,6 +81,7 @@ const Signup = () => {
               type="number"
               value={userPhone}
               onChange={(e) => setUserPhone(e.target.value)}
+              required
             />
           </div>
           <div style={{ display: "flex", flexDirection: "row" }}>
@@ -87,6 +91,7 @@ const Signup = () => {
               type="text"
               value={userAddress}
               onChange={(e) => setUserAddress(e.target.value)}
+              required
             />
           </div>
           <div style={{ display: "flex", flexDirection: "row" }}>
@@ -96,6 +101,7 @@ const Signup = () => {
               type="password"
               value={userPassword}
               onChange={(e) => setUserPassword(e.target.value)}
+              required
             />
           </div>
           <div style={{ display: "flex", flexDirection: "row" }}>
@@ -105,6 +111,7 @@ const Signup = () => {
               type="text"
               value={userType}
               onChange={(e) => setUserType(e.target.value)}
+              required
             />
           </div>
           <div style={{ display: "flex", flexDirection: "row" }}>
@@ -114,6 +121,7 @@ const Signup = () => {
               type="text"
               value={userNickName}
               onChange={(e) => setUserNickName(e.target.value)}
+              required
             />
           </div>
           <button className="button-form" type="submit">

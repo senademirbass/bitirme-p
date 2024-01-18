@@ -2,8 +2,8 @@ import "./App.css";
 import React, { useState } from "react";
 import { Route, Routes } from "react-router-dom";
 import Header from "./components/Header";
-import Hakkımızda from "./components/Hakkımızda";
-import Ekip from "./components/Ekip";
+import Hakkımızda from "./components/About";
+import Ekip from "./components/Team";
 import Login from "./components/Login";
 import Footer from "./components/Footer";
 import Home from "./components/Home";
@@ -14,6 +14,7 @@ import MyAds from "./components/MyAds";
 
 function App() {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
+
   return (
     <div className="App">
       <Header isLoggedIn={isLoggedIn} />
@@ -33,6 +34,8 @@ function App() {
         <Route path="/signup" element={<Signup />} />
         <Route path="/todo" element={<ToDo />} />
         <Route path="/myads" element={<MyAds />} />
+        {/* Set the default route to "/home" */}
+        <Route index element={<Home />} />
       </Routes>
       <Footer />
     </div>

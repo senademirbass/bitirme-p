@@ -1,7 +1,7 @@
 import React from "react";
 import "../css/style.css";
 import "../css/bootstrap.css";
-import Slider from "./Slider";
+import AboutPageSlider from "./AboutPageSlider";
 export default function Hakkımızda() {
   const titleAbout = "İyilik Denizi Nedir?";
   return (
@@ -21,7 +21,7 @@ export default function Hakkımızda() {
           <div className="row">
             <div className="col-md-6">
               <div className="img-box">
-                <Slider />
+                <AboutPageSlider />
               </div>
             </div>
             <div className="col-md-6">

@@ -104,6 +104,8 @@ app.post("/api/login", async (req, res) => {
 });
 
 /* Kullanıcı profil bilgilerini getirme
+
+
 app.get("/api/profile", (req, res) => {
   const userNickname = req.session.userNickname; // Güncelleme burada
   console.log("Oturumdan alınan kullanıcı adı (nickname):", userNickname);
@@ -136,6 +138,14 @@ app.get("/api/profile", (req, res) => {
     }
   });
 });*/
+
+app.get("/api/announcements", (req, res) => {
+  const query = "SELECT title_a, desc_a FROM announcements";
+  connection.query(query, (error, results) => {
+    if (error) throw error;
+    res.json(results);
+  });
+});
 app.listen(port, () => {
   console.log(`Server ${port} portunda çalışıyor`);
 });
