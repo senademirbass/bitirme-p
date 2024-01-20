@@ -12,21 +12,6 @@ function MyProfile() {
     userNickName: "",
   });
 
-  useEffect(() => {
-    // API'den kullanıcı verilerini çek
-    const fetchUserData = async () => {
-      try {
-        const response = await fetch("http://localhost:3001/api/user");
-        const userDataFromApi = await response.json();
-        setUserData(userDataFromApi);
-      } catch (error) {
-        console.error("Veri çekme hatası", error.message);
-      }
-    };
-
-    fetchUserData();
-  }, []); // Boş bağımlılık dizisi, yalnızca bileşen ilk kez oluşturulduğunda çalışmasını sağlar.
-
   const formFields = [
     { label: "Ad", key: "userName", type: "text" },
     { label: "Soyad", key: "userSurName", type: "text" },

@@ -94,10 +94,12 @@ app.post("/api/login", async (req, res) => {
   const { nickname, password } = req.body;
 
   try {
-    const [rows, fields] = db.query(
-      "SELECT * FROM users WHERE user_nickname = ? AND user_password = ?",
-      [nickname, password]
-    );
+    const [rows, fields] = await db
+      .promise()
+      .query(
+        "SELECT * FROM users WHERE user_nickname = ? AND user_password = ?",
+        [nickname, password]
+      );
 
     if (rows && rows.length > 0) {
       req.session.user = {
@@ -110,7 +112,7 @@ app.post("/api/login", async (req, res) => {
       res.status(401).json({ message: "Kullanıcı adı veya şifre hatalı" });
     }
   } catch (error) {
-    console.error(error.message);
+    console.error("hata:", error.stack);
     res.status(500).json({ message: "Sunucu hatası" });
   }
 });

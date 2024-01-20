@@ -30,7 +30,6 @@ const Login = ({ onLogin }) => {
           userId: data.userId, // Örnek: Burada sunucudan gelen kullanıcı ID'sini kullanmalısınız
           username: nickname, // Örnek: Kullanıcı adını nickname olarak varsayıyoruz
         });
-
         // Navigate to profile page
         navigate("/profile");
       } else {
@@ -80,7 +79,7 @@ const Login = ({ onLogin }) => {
           </form>
         </div>
       </div>
-      <ToastContainer position="bottom-right" />
+      {/*<ToastContainer position="bottom-right" />*/}
     </>
   );
 };
