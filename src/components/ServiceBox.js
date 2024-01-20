@@ -17,9 +17,6 @@ const ServiceBox = ({ id, imageSrc, title, description, content }) => {
     <>
       <div className="col-md-4">
         <div className="box">
-          <div className="img-box">
-            <img src={imageSrc} alt="modal-image" />
-          </div>
           <div className="detail-box">
             <h5 className="homePage_services_titles">{title}</h5>
             <p className="homePage_services_descs">{description}</p>

@@ -1,5 +1,7 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 import "../css/proje.css";
 
 const Login = ({ onLogin }) => {
@@ -18,26 +20,30 @@ const Login = ({ onLogin }) => {
         },
         body: JSON.stringify({ nickname, password }),
       });
+
       if (response.ok) {
         const data = await response.json();
         console.log("Giriş Başarılı:", data.message);
-        // Kullanıcı durumunu güncelleme, yönlendirme yapma vb. işlemler
-        onLogin();
+
+        // Kullanıcı bilgilerini onLogin fonksiyonuna iletiliyor
+        onLogin({
+          userId: data.userId, // Örnek: Burada sunucudan gelen kullanıcı ID'sini kullanmalısınız
+          username: nickname, // Örnek: Kullanıcı adını nickname olarak varsayıyoruz
+        });
+
+        // Navigate to profile page
         navigate("/profile");
       } else {
         const errorData = await response.json();
         console.error("Giriş Hatası:", errorData.message);
-        // Hata mesajını kullanıcıya gösterme veya başka işlemler
+        toast.error("Giriş başarısız! Kullanıcı adı veya şifre hatalı.");
       }
     } catch (error) {
       console.error("İstek Hatası:", error.message);
-      // İstek hatası durumunda başka işlemler
+      toast.error("İstek hatası oluştu. Lütfen tekrar deneyin.");
     }
-
-    // Burada giriş yapma işlemleri gerçekleştirilebilir
-    console.log("Kullanıcı Adı:", nickname);
-    console.log("Password:", password);
   };
+
   return (
     <>
       <div
@@ -74,6 +80,7 @@ const Login = ({ onLogin }) => {
           </form>
         </div>
       </div>
+      <ToastContainer position="bottom-right" />
     </>
   );
 };

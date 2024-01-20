@@ -3,27 +3,48 @@ import express from "express";
 import bodyParser from "body-parser";
 import cors from "cors";
 import session from "express-session";
+import MySQLStoreImport from "express-mysql-session";
+
+const MySQLStore = MySQLStoreImport(session);
 
 const app = express();
 const port = 3001;
-
-app.use(bodyParser.json());
-
-/*app.use(
-  session({
-    secret: "KksEQPjP6l", // Güvenli bir rastgele anahtar
-    resave: false,
-    saveUninitialized: true,
-    store: sessionStore,
-  })
-);*/
-
+const secretKey = "1928918291839819212";
 const db = mysql2.createConnection({
   host: "localhost",
   user: "root",
   password: "sena123",
   database: "bitirme",
 });
+
+const sessionStore = new MySQLStore(
+  {
+    expiration: 86400000,
+    createDatabaseTable: false,
+    schema: {
+      tableName: "sessions",
+      columnNames: {
+        session_id: "session_id",
+        expires: "expires",
+        data: "data",
+      },
+    },
+  },
+  db
+);
+
+app.use(
+  session({
+    secret: secretKey,
+    resave: false,
+    saveUninitialized: true,
+    store: sessionStore,
+    cookie: { secure: true },
+  })
+);
+
+app.use(bodyParser.json());
+
 db.connect((err) => {
   if (err) {
     throw err;
@@ -68,31 +89,22 @@ app.post("/register", (req, res) => {
   });
 });
 
-// Kullanıcı modeli
-const User = {
-  findByNicknameAndPassword: (nickname, password) => {
-    return new Promise((resolve, reject) => {
-      db.query(
-        "SELECT * FROM users WHERE user_nickname = ? AND user_password = ?",
-        [nickname, password],
-        (err, results) => {
-          if (err) {
-            return reject(err);
-          }
-          resolve(results[0]);
-        }
-      );
-    });
-  },
-};
-// Login endpoint'i
+// LOGIN
 app.post("/api/login", async (req, res) => {
   const { nickname, password } = req.body;
 
   try {
-    const user = await User.findByNicknameAndPassword(nickname, password);
+    const [rows, fields] = db.query(
+      "SELECT * FROM users WHERE user_nickname = ? AND user_password = ?",
+      [nickname, password]
+    );
 
-    if (user) {
+    if (rows && rows.length > 0) {
+      req.session.user = {
+        userId: rows[0].user_id,
+        username: rows[0].user_nickname,
+      };
+
       res.json({ message: "Giriş Başarılı" });
     } else {
       res.status(401).json({ message: "Kullanıcı adı veya şifre hatalı" });
@@ -103,49 +115,6 @@ app.post("/api/login", async (req, res) => {
   }
 });
 
-/* Kullanıcı profil bilgilerini getirme
-
-
-app.get("/api/profile", (req, res) => {
-  const userNickname = req.session.userNickname; // Güncelleme burada
-  console.log("Oturumdan alınan kullanıcı adı (nickname):", userNickname);
-  console.log("Oturum verisi:", req.session);
-
-  if (!userNickname) {
-    return res.status(401).json({ error: "Kullanıcı oturumu bulunamadı." });
-  }
-
-  const query = "SELECT * FROM users WHERE user_nickname = ?"; // Güncelleme burada
-  db.query(query, [userNickname], (err, result) => {
-    if (err) {
-      console.error("Kullanıcı bilgileri alınamadı.", err);
-      res.status(500).json({ error: "Kullanıcı oturumu bulunamadı." });
-    } else {
-      if (result.length > 0) {
-        const userData = result[0];
-        res.json({
-          user_name: userData.user_name,
-          user_surname: userData.user_surname,
-          user_mail: userData.user_mail,
-          user_phone: userData.user_phone,
-          user_address: userData.user_address,
-          user_type: userData.user_type,
-          user_nickname: userData.user_nickname,
-        });
-      } else {
-        res.status(404).json({ error: "Kullanıcı bulunamadı." });
-      }
-    }
-  });
-});*/
-
-app.get("/api/announcements", (req, res) => {
-  const query = "SELECT title_a, desc_a FROM announcements";
-  connection.query(query, (error, results) => {
-    if (error) throw error;
-    res.json(results);
-  });
-});
 app.listen(port, () => {
   console.log(`Server ${port} portunda çalışıyor`);
 });

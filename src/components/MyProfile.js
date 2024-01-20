@@ -12,6 +12,21 @@ function MyProfile() {
     userNickName: "",
   });
 
+  useEffect(() => {
+    // API'den kullanıcı verilerini çek
+    const fetchUserData = async () => {
+      try {
+        const response = await fetch("http://localhost:3001/api/user");
+        const userDataFromApi = await response.json();
+        setUserData(userDataFromApi);
+      } catch (error) {
+        console.error("Veri çekme hatası", error.message);
+      }
+    };
+
+    fetchUserData();
+  }, []); // Boş bağımlılık dizisi, yalnızca bileşen ilk kez oluşturulduğunda çalışmasını sağlar.
+
   const formFields = [
     { label: "Ad", key: "userName", type: "text" },
     { label: "Soyad", key: "userSurName", type: "text" },
@@ -21,25 +36,6 @@ function MyProfile() {
     { label: "Üyelik Türü", key: "userType", type: "text" },
     { label: "Kullanıcı Adı", key: "userNickName", type: "text" },
   ];
-
-  /*useEffect(() => {
-    fetch("http://localhost:3001/api/profile", {
-      method: "GET",
-    })
-      .then((response) => {
-        if (!response.ok) {
-          throw new Error("Kullanıcı bilgileri alınamadı."); // 401 hatası kontrolü
-        }
-        return response.json();
-      })
-      .then((data) => {
-        console.log("Gelen kullanıcı bilgileri:", data);
-        setUserData(data);
-      })
-      .catch((error) => {
-        console.error(error.message);
-      });
-  }, []);*/
 
   return (
     <div className="bodyBox">

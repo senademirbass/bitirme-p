@@ -1,9 +1,10 @@
 import React, { useState, useEffect } from "react";
-import yardım1 from "../photos/yardım1.png";
-import yardım2 from "../photos/yardım2.png";
-import yardım3 from "../photos/yardım3.png";
-function AboutPageSlider() {
-  const images = [yardım1, yardım2, yardım3];
+function Slider() {
+  const images = [
+    require("../photos/yardım1.png"),
+    require("../photos/yardım2.png"),
+    require("../photos/yardım3.png"),
+  ];
 
   const [currentImageIndex, setCurrentImageIndex] = useState(0);
 
@@ -27,4 +28,4 @@ function AboutPageSlider() {
   );
 }
 
-export default AboutPageSlider;
+export default Slider;

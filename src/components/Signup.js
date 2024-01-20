@@ -1,6 +1,8 @@
 import React, { useState } from "react";
 import axios from "axios";
 import "../css/proje.css";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 const Signup = () => {
   const [userName, setUserName] = useState("");
@@ -26,9 +28,16 @@ const Signup = () => {
         userType,
         userNickName,
       });
+
       console.log("Kayıt başarılı", response.data);
+
+      // Başarı "toast" mesajını göster
+      toast.success("Kayıt başarılı");
     } catch (error) {
       console.log("Kayıt sırasında bir hata oluştu.", error.message);
+
+      // Hata "toast" mesajını göster
+      toast.error("Kayıt sırasında bir hata oluştu.");
     }
   };
   return (
@@ -36,9 +45,10 @@ const Signup = () => {
       style={{
         display: "flex",
         flexDirection: "row",
-        justifyContent: "space-around",
+        justifyContent: "center",
       }}
     >
+      <ToastContainer />
       {/* Üye Ol Formu */}
       <div style={{ marginTop: 30, marginBottom: 20 }}>
         <h2>Üye Ol</h2>

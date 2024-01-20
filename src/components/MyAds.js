@@ -2,11 +2,9 @@ import React, { useState } from "react";
 import Card from "./cards/Card";
 import AdDetailModal from "./AdDetailModal.js"; // Örnek bir modal bileşeni
 import CreateAdModal from "./CreateAdModal";
-import ads from "../photos/ads.png";
-import ads2 from "../photos/ads2.png";
 import "../css/proje.css";
 
-const images = [ads, ads2];
+const images = [require("../photos/ads.png"), require("../photos/ads2.png")];
 
 const adsData = [
   {

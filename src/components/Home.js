@@ -3,18 +3,8 @@ import ImageSlider from "./ImageSlider";
 import ServiceSectionHome from "./ServiceSectionHome";
 
 function Home() {
-  const imageDirectory = "/sliderhome/";
-  const imageNames = [
-    "duyuru.png",
-    "duyuru2.png",
-    "duyurular.jpg",
-    "kozmetik-duyurulari.jpg",
-  ];
-
-  const servicesTitle = {
-    value: "Burada Neler Yapabilirsin?",
-    className: "homePage_services",
-  };
+  const imageDirectory = "/duyurular/";
+  const imageNames = ["dy1.png", "dy2.png", "dy3.png"];
 
   const images = imageNames.map((imageName) => imageDirectory + imageName);
 
