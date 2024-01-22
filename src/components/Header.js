@@ -3,13 +3,14 @@ import { Link } from "react-router-dom";
 import "../css/style.css";
 import "../css/bootstrap.css";
 
-export default function Header({ isLoggedIn }) {
+export default function Header({ isLoggedIn, onLogout }) {
   const pageName = "İyilik Denizi";
   const pageNameStyle = {
     fontSize: "40px",
     fontFamily: "Agbalumo",
     color: "#fff3cd",
   };
+
   return (
     <>
       <header className="header_section">
@@ -47,7 +48,7 @@ export default function Header({ isLoggedIn }) {
                     </li>
                     <li className="nav-item">
                       <a href="#" className="nav-link">
-                        <Link to="/myads">İlanlarım</Link>
+                        <Link to="/myads">İlanlar</Link>
                       </a>
                     </li>
                     <li className="nav-item">

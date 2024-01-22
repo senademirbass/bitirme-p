@@ -9,71 +9,67 @@ function Footer() {
   const mail = "demirbassena139@gmail.com";
   const social = "https://www.linkedin.com/in/senaademirbas/";
   return (
-    <>
-      <footer className="info_section layout_padding2">
-        <div className="container">
-          <div className="row">
-            <div className="col-md-6 col-lg-3 info_col">
-              <div className="info_contact">
-                <h4>İletişim Bilgileri</h4>
-                <div className="contact_link_box">
-                  <a href={location} target={"_blank"}>
-                    <i className="fa fa-map-marker" aria-hidden="true"></i>
-                    <span>Konum</span>
-                  </a>
-                  <a href={`mailto:${mail}`}>
-                    <i className="fa fa-envelope" aria-hidden="true"></i>
-                    <span>Mail</span>
-                  </a>
-                </div>
-              </div>
-            </div>
-            <div className="col-md-6 col-lg-3 info_col">
-              <div className="info_detail">
-                <h4>Info</h4>
-                <p style={{ color: "#002b64" }}>
-                  Bu web sitesi Sena Demirbaş tarafından oluşturulmuştur.
-                </p>
-              </div>
-            </div>
-            <div className="col-md-6 col-lg-2 mx-auto info_col">
-              <div className="info_link_box">
-                <h4>Links</h4>
-                <div className="info_links">
-                  <a>
-                    <Link style={{ color: "#002b64" }} to="/home">
-                      Ana Sayfa
-                    </Link>
-                  </a>
-                  <a>
-                    <Link style={{ color: "#002b64" }} to="/about">
-                      Hakkımızda
-                    </Link>
-                  </a>
-                  <a>
-                    <Link style={{ color: "#002b64" }} to="/team">
-                      Ekibimiz
-                    </Link>
-                  </a>
-                </div>
-              </div>
-            </div>
-            <div className="col-md-6 col-lg-3 info_col">
-              <h4>Sosyal Medya</h4>
-              <div className="info_links">
-                <a href={social} target={"_blank"}>
-                  <i
-                    className="fa fa-linkedin"
-                    style={{ color: "#002b64" }}
-                    aria-hidden="true"
-                  ></i>
-                </a>
-              </div>
+    <footer className="info_section layout_padding2">
+      <div className="row">
+        <div className="col-md-6 col-lg-3 info_col">
+          <div className="info_contact">
+            <h4>İletişim Bilgileri</h4>
+            <div className="contact_link_box">
+              <a href={location} target={"_blank"}>
+                <i className="fa fa-map-marker" aria-hidden="true"></i>
+                <span>Konum</span>
+              </a>
+              <a href={`mailto:${mail}`}>
+                <i className="fa fa-envelope" aria-hidden="true"></i>
+                <span>Mail</span>
+              </a>
             </div>
           </div>
         </div>
-      </footer>
-    </>
+        <div className="col-md-6 col-lg-3 info_col">
+          <div className="info_detail">
+            <h4>Info</h4>
+            <p style={{ color: "#002b64" }}>
+              Bu web sitesi Sena Demirbaş tarafından oluşturulmuştur.
+            </p>
+          </div>
+        </div>
+        <div className="col-md-6 col-lg-2 mx-auto info_col">
+          <div className="info_link_box">
+            <h4>Links</h4>
+            <div className="info_links">
+              <a>
+                <Link style={{ color: "#002b64" }} to="/home">
+                  Ana Sayfa
+                </Link>
+              </a>
+              <a>
+                <Link style={{ color: "#002b64" }} to="/about">
+                  Hakkımızda
+                </Link>
+              </a>
+              <a>
+                <Link style={{ color: "#002b64" }} to="/team">
+                  Ekibimiz
+                </Link>
+              </a>
+            </div>
+          </div>
+        </div>
+        <div className="col-md-6 col-lg-3 info_col">
+          <h4>Sosyal Medya</h4>
+          <div className="info_links">
+            <a href={social} target={"_blank"}>
+              <i
+                className="fa fa-linkedin"
+                style={{ color: "#002b64" }}
+                aria-hidden="true"
+              ></i>
+            </a>
+          </div>
+        </div>
+      </div>
+    </footer>
   );
 }
 

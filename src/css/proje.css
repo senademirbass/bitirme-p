@@ -141,71 +141,6 @@ input:disabled {
   padding: 0.1em 0.3em;
 }
 
-.adModal {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  background-color: rgba(0, 0, 0, 0.5);
-  z-index: 1;
-}
-
-.adModal-content {
-  background-color: #fff;
-  padding: 20px;
-  border-radius: 8px;
-  max-width: 400px;
-  width: 100%;
-}
-
-.adModalClose {
-  cursor: pointer;
-  position: absolute;
-  top: 10px;
-  right: 10px;
-  font-size: 20px;
-}
-
-.adModal-content label {
-  display: block;
-  margin-top: 10px;
-  font-size: 16px;
-  color: #333;
-}
-
-.adModal-content input,
-.adModal-content textarea {
-  width: 100%;
-  padding: 10px;
-  margin: 5px 0 15px;
-  border: 1px solid #ccc;
-  border-radius: 4px;
-  box-sizing: border-box;
-  font-size: 14px;
-}
-
-.adModal-content textarea {
-  resize: vertical;
-}
-
-.adModal-content button {
-  background-color: #4caf50;
-  color: #fff;
-  padding: 10px 15px;
-  border: none;
-  border-radius: 4px;
-  cursor: pointer;
-  font-size: 16px;
-}
-
-.adModal-content button:hover {
-  background-color: #45a049;
-}
-
 .button-80 {
   background: #fff;
   backface-visibility: hidden;
@@ -265,3 +200,88 @@ input:disabled {
 .button-80:not(:disabled):active {
   transform: translateY(0.125rem);
 }
+
+.createAd {
+  display: flex;
+  align-content: center;
+  margin-left: 430px;
+  margin-top: 30px;
+}
+
+.adTitle {
+  display: flex;
+  align-content: center;
+  text-align: center;
+  justify-content: center;
+  margin-top: 10px;
+}
+
+.adForm {
+  display: "flex";
+  justify-content: "center";
+  flex-direction: "column";
+  align-items: "center";
+  background-color: azure;
+}
+
+.button-24 {
+  background: #ff4742;
+  border: 1px solid #ff4742;
+  border-radius: 6px;
+  box-shadow: rgba(0, 0, 0, 0.1) 1px 2px 4px;
+  box-sizing: border-box;
+  color: #ffffff;
+  cursor: pointer;
+  display: inline-block;
+  font-family: nunito, roboto, proxima-nova, "proxima nova", sans-serif;
+  font-size: 16px;
+  font-weight: 800;
+  line-height: 16px;
+  min-height: 40px;
+  outline: 0;
+  padding: 12px 14px;
+  text-align: center;
+  text-rendering: geometricprecision;
+  text-transform: none;
+  user-select: none;
+  -webkit-user-select: none;
+  touch-action: manipulation;
+  vertical-align: middle;
+}
+
+.button-24:hover,
+.button-24:active {
+  background-color: initial;
+  background-position: 0 0;
+  color: #ff4742;
+}
+
+.button-24:active {
+  opacity: 0.5;
+}
+
+.success-message {
+  color: green; /* Başarı mesajının metin rengi */
+  font-weight: bold; /* Kalın yazı tipi */
+  margin-top: 10px; /* Mesajın üstündeki boşluk */
+}
+
+.error-message {
+  color: red; /* Hata mesajının metin rengi */
+  font-weight: bold; /* Kalın yazı tipi */
+  margin-top: 10px; /* Mesajın üstündeki boşluk */
+}
+
+.card-container {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-around;
+  margin: 20px; /* Sayfa kenarlarından 20px mesafe bırakır */
+}
+
+.button-container {
+  text-align: center;
+  margin-top: 20px; /* Kartlar ile buton arasına 20px mesafe bırakır */
+}
+
+/* İsterseniz, Card bileşeninin stilini de güzelleştirebilirsiniz */

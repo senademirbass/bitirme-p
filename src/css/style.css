@@ -16,16 +16,28 @@ body {
 /*-----------GİRİS FORM------------------------------*/
 
 /* Form Container */
-.giris,
+.giris {
+  display: flex;
+  width: 500px;
+  margin: 0 auto;
+  padding: 30px;
+  border: 1px solid #ccc;
+  border-radius: 10px;
+  background-color: azure;
+  box-shadow: #002b64;
+  flex-direction: "row";
+  justify-content: "space-around";
+}
+
 .uyeOl {
   width: 500px;
   margin: 0 auto;
-  padding: 20px;
+  padding: 30px;
   border: 1px solid #ccc;
-  border-radius: 5px;
+  border-radius: 10px;
   background-color: azure;
+  box-shadow: #002b64;
 }
-
 /* Form Input */
 .giris input,
 .uyeOl input[type="text"],
@@ -36,7 +48,7 @@ body {
 .uyeOl input[type="password"] {
   display: flex;
   justify-content: center;
-  width: 50%;
+  width: 70%;
   padding: 6px;
   margin-bottom: 15px;
   border: 1px solid #ccc;

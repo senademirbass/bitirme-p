@@ -30,14 +30,10 @@ const Signup = () => {
       });
 
       console.log("Kayıt başarılı", response.data);
-
-      // Başarı "toast" mesajını göster
       toast.success("Kayıt başarılı");
     } catch (error) {
       console.log("Kayıt sırasında bir hata oluştu.", error.message);
-
-      // Hata "toast" mesajını göster
-      toast.error("Kayıt sırasında bir hata oluştu.");
+      toast.error("Bu kullanıcı kayıtlı.");
     }
   };
   return (
@@ -50,7 +46,7 @@ const Signup = () => {
     >
       <ToastContainer />
       {/* Üye Ol Formu */}
-      <div style={{ marginTop: 30, marginBottom: 20 }}>
+      <div style={{ marginTop: 30 }}>
         <h2>Üye Ol</h2>
         <form className="uyeOl" onSubmit={handleSubmit}>
           <div style={{ display: "flex", flexDirection: "row" }}>
@@ -134,7 +130,7 @@ const Signup = () => {
               required
             />
           </div>
-          <button className="button-form" type="submit">
+          <button className="button-24" type="submit">
             Üye Ol
           </button>
         </form>

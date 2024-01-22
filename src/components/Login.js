@@ -8,6 +8,7 @@ const Login = ({ onLogin }) => {
   const navigate = useNavigate();
   const [nickname, setNickname] = useState("");
   const [password, setPassword] = useState("");
+  const [successMessage, setSuccessMessage] = useState("");
 
   const handleLogin = async (e) => {
     e.preventDefault();
@@ -18,23 +19,26 @@ const Login = ({ onLogin }) => {
         headers: {
           "Content-Type": "application/json",
         },
+        credentials: "include",
         body: JSON.stringify({ nickname, password }),
       });
 
       if (response.ok) {
+        // Giriş başarılı olduğunda
         const data = await response.json();
-        console.log("Giriş Başarılı:", data.message);
+        console.log(data.message);
 
-        // Kullanıcı bilgilerini onLogin fonksiyonuna iletiliyor
         onLogin({
-          userId: data.userId, // Örnek: Burada sunucudan gelen kullanıcı ID'sini kullanmalısınız
-          username: nickname, // Örnek: Kullanıcı adını nickname olarak varsayıyoruz
+          userId: data.userId,
+          username: nickname,
         });
-        // Navigate to profile page
-        navigate("/profile");
+
+        // Giriş başarılı olduğunda anasayfaya yönlendirme
+        navigate("/home");
       } else {
+        // Giriş başarısız olduğunda
         const errorData = await response.json();
-        console.error("Giriş Hatası:", errorData.message);
+        console.error(errorData.message);
         toast.error("Giriş başarısız! Kullanıcı adı veya şifre hatalı.");
       }
     } catch (error) {
@@ -45,6 +49,7 @@ const Login = ({ onLogin }) => {
 
   return (
     <>
+      <ToastContainer position="bottom-right" />
       <div
         style={{
           display: "flex",
@@ -52,11 +57,15 @@ const Login = ({ onLogin }) => {
           justifyContent: "space-around",
         }}
       >
-        <div style={{ marginTop: 30 }}>
+        <div
+          style={{
+            marginTop: 30,
+          }}
+        >
           <h2>Giriş Yap</h2>
           <form className="giris" onSubmit={handleLogin}>
             <div style={{ display: "flex", flexDirection: "row" }}>
-              <label>Kullanıcı Adı</label>
+              <label>Kullanıcı Adı:</label>
               <input
                 className="giris input"
                 type="text"
@@ -73,13 +82,12 @@ const Login = ({ onLogin }) => {
                 onChange={(e) => setPassword(e.target.value)}
               />
             </div>
-            <button className="button-form" type="submit">
+            <button className="button-24" type="submit">
               Giriş Yap
             </button>
           </form>
         </div>
       </div>
-      {/*<ToastContainer position="bottom-right" />*/}
     </>
   );
 };
