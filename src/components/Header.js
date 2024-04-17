@@ -3,7 +3,7 @@ import { Link } from "react-router-dom";
 import "../css/style.css";
 import "../css/bootstrap.css";
 
-export default function Header({ isLoggedIn, onLogout }) {
+export default function Header({ isLoggedIn }) {
   const pageName = "İyilik Denizi";
   const pageNameStyle = {
     fontSize: "40px",
@@ -11,6 +11,26 @@ export default function Header({ isLoggedIn, onLogout }) {
     color: "#fff3cd",
   };
 
+  const handleLogout = async () => {
+    try {
+      const response = await fetch("http://localhost:3001/logout", {
+        method: "POST",
+        credentials: "include",
+      });
+      if (response.ok) {
+        // Oturum başarıyla sonlandırıldı, anasayfaya yönlendir
+        window.location.href = "/"; // Sayfayı yeniden yükler
+      } else {
+        console.error("Oturum sonlandırılamadı.");
+        // Hata durumunda da anasayfaya yönlendir
+        window.location.href = "/"; // Sayfayı yeniden yükler
+      }
+    } catch (error) {
+      console.error("Oturum sonlandırma hatası:", error);
+      // Hata durumunda da anasayfaya yönlendir
+      window.location.href = "/"; // Sayfayı yeniden yükler
+    }
+  };
   return (
     <>
       <header className="header_section">
@@ -55,6 +75,11 @@ export default function Header({ isLoggedIn, onLogout }) {
                       <a href="#" className="nav-link">
                         <Link to="/todo">Yapılacaklar</Link>
                       </a>
+                    </li>
+                    <li className="nav-item">
+                      <button className="button-2" onClick={handleLogout}>
+                        Çıkış
+                      </button>
                     </li>
                   </>
                 ) : (

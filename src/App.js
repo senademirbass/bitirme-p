@@ -38,6 +38,7 @@ function App() {
         <Route path="/myads" element={<MyAds />} />
         <Route path="/sliderModal" element={<SliderModal />} />
         <Route path="/create-ad" element={<CreateAdPage />} />
+        <Route path="/logout" />
         {/* Set the default route to "/home" */}
         <Route index element={<Home />} />
       </Routes>

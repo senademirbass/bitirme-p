@@ -3,36 +3,19 @@ import express from "express";
 import bodyParser from "body-parser";
 import cors from "cors";
 import session from "express-session";
-import MySQLStoreImport from "express-mysql-session";
+import cookieParser from "cookie-parser";
+import MySQLStoreFactory from "express-mysql-session";
 
-const MySQLStore = MySQLStoreImport(session);
+const MySQLStore = MySQLStoreFactory(session);
 
 const app = express();
 const port = 3001;
-const secretKey = "1928918291839819212";
 const db = mysql2.createConnection({
   host: "localhost",
   user: "root",
   password: "sena123",
   database: "bitirme",
 });
-
-const sessionStore = new MySQLStore(
-  {
-    checkExpirationInterval: 900000, // 15 dakika
-    expiration: 86400000, // 1 gün
-    createDatabaseTable: true,
-    schema: {
-      tableName: "sessions",
-      columnNames: {
-        session_id: "sessions_id",
-        expires: "expires",
-        data: "data",
-      },
-    },
-  },
-  db
-);
 
 app.use(
   cors({
@@ -41,22 +24,54 @@ app.use(
   })
 );
 
+const options = {
+  host: "localhost",
+  port: 3306,
+  user: "root",
+  password: "sena123",
+  database: "bitirme",
+  createDatabaseTable: false,
+  schema: {
+    tableName: "sessions",
+    columnNames: {
+      session_id: "session_id",
+      expires: "expires",
+      data: "data",
+    },
+  },
+};
+const sessionStore = new MySQLStore(options);
+
 app.use(bodyParser.json());
+app.use(cookieParser());
 
 app.use(
   session({
-    secret: secretKey,
+    key: "cookine_name",
+    secret: "session_cookie_secret",
     resave: false,
-    saveUninitialized: true,
+    saveUninitialized: false,
     store: sessionStore,
-    cookie: {
-      maxAge: 60 * 60 * 1000, // 1 saat
-      httpOnly: true,
-      secure: true,
-      sameSite: "strict",
-    },
   })
 );
+
+// Optionally use onReady() to get a promise that resolves when store is ready.
+sessionStore
+  .onReady()
+  .then(() => {
+    // MySQL session store ready for use.
+    console.log("MySQLStore ready");
+  })
+  .catch((error) => {
+    // Something went wrong.
+    console.error(error);
+  });
+
+app.get("/", (req, res) => {
+  req.session.isAuth = true;
+  console.log(req.session);
+  res.send("hello sessions");
+});
 
 db.connect((err) => {
   if (err) {
@@ -64,6 +79,14 @@ db.connect((err) => {
   }
   console.log("Mysql bağlantısı başarılı");
 });
+
+const isAuth = (req, res, next) => {
+  if (req.session.isAuth) {
+    next();
+  } else {
+    res.redirect("api/login");
+  }
+};
 
 // REGISTER
 app.post("/register", (req, res) => {
@@ -125,8 +148,6 @@ app.post("/register", (req, res) => {
   });
 });
 
-// Oturumu başlat
-// LOGIN
 app.post("/api/login", async (req, res) => {
   const { nickname, password } = req.body;
 
@@ -139,28 +160,15 @@ app.post("/api/login", async (req, res) => {
       );
 
     if (rows && rows.length > 0) {
-      const user = {
-        userId: rows[0].user_id,
-      };
-
-      // Eğer 'data' alanı yoksa oluştur
-      req.session.data = req.session.data || {};
-
-      // 'data' içinde 'user_id' bilgisini sakla
-      req.session.data.user_id = user.userId;
-
-      // Oturum veritabanına kaydedilen bilgileri güncelle
-      sessionStore.set(req.sessionID, { ...req.session }, (err) => {
-        if (err) {
-          console.error("Oturum veritabanına güncelleme hatası:", err);
-        }
-      });
+      // Kullanıcı bulunduğunda oturumu işaretle
+      req.session.isAuth = true;
+      req.session.user_id = rows[0].user_id; // Kullanıcı kimliğini kaydet
 
       res.json({
         message: "Giriş Başarılı",
-        session: req.session.data.user_id,
+        session: req.session.user_id, // Kullanıcı kimliğini döndür
       });
-      console.log(req.session.data.user_id);
+      console.log(req.session.user_id);
     } else {
       res.status(401).json({ message: "Kullanıcı adı veya şifre hatalı" });
     }
@@ -169,47 +177,25 @@ app.post("/api/login", async (req, res) => {
     res.status(500).json({ message: "Sunucu hatası" });
   }
 });
-// Middleware'i kullan
-app.use((req, res, next) => {
-  if (!req.session.data) {
-    // Eğer req.session.data henüz oluşturulmamışsa, oluştur
-    req.session.data = {};
-  }
 
-  if (req.session && req.session.user && req.session.user.userId) {
-    // Eğer kullanıcı giriş yapmışsa, user_id'yi req.session.data içinde güncelle
-    req.session.data.user_id = req.session.user.userId;
-
-    // Oturum veritabanına kaydedilen bilgileri güncelle
-    sessionStore.set(req.sessionID, { ...req.session }, (err) => {
-      if (err) {
-        console.error("Oturum veritabanına güncelleme hatası:", err);
-      }
-      next();
-    });
-  } else {
-    // Kullanıcı giriş yapmamışsa devam et
-    next();
-  }
-});
-
-//SESSION INFO
+// SESSION INFO
 app.get("/api/session-user", (req, res) => {
-  // req.session.data içinde user_id varsa, bu değeri gönder
-  const userId = req.session.data.user_id;
+  // Oturum içinde isAuth ve user_id varsa, bu değerleri gönder
+  const isAuth = req.session.isAuth;
+  const userId = req.session.user_id;
 
-  if (userId) {
-    res.json({ userId });
+  if (isAuth && userId) {
+    res.json({ isAuth, userId });
   } else {
     res.status(401).json({ message: "Kullanıcı oturumu bulunamadı." });
   }
 });
 
-// PROFILE
-app.get("/api/profile", async (req, res) => {
-  if (req.session && req.session.user && req.session.user.userId) {
-    const userId = req.session.user.userId;
+// Kullanıcı profilini alma endpoint'i
+app.get("/api/profile", isAuth, async (req, res) => {
+  const userId = req.session.user_id;
 
+  try {
     // Kullanıcının profil bilgilerini veritabanından çek
     const [rows, fields] = await db
       .promise()
@@ -217,8 +203,8 @@ app.get("/api/profile", async (req, res) => {
 
     if (rows && rows.length > 0) {
       const userProfile = {
-        userId: req.session.user.userId,
-        username: req.session.user.username,
+        userId: rows[0].user_id,
+        username: rows[0].user_name, // Kullanıcı adını buradan al
         usersurname: rows[0].user_surname,
         usermail: rows[0].user_mail,
         userphone: rows[0].user_phone,
@@ -231,8 +217,9 @@ app.get("/api/profile", async (req, res) => {
     } else {
       res.status(404).json({ message: "Kullanıcı bulunamadı" });
     }
-  } else {
-    res.status(401).json({ message: "Giriş yapmış bir kullanıcı bulunamadı" });
+  } catch (error) {
+    console.error("Profil bilgileri alınırken hata oluştu:", error);
+    res.status(500).json({ message: "Sunucu hatası" });
   }
 });
 
@@ -283,6 +270,64 @@ app.post("/api/volunteer", (req, res) => {
 
     res.json({ success: true });
   });
+});
+
+app.post("/logout", (req, res) => {
+  req.session.destroy((err) => {
+    if (err) throw err;
+    res.redirect("/");
+  });
+});
+
+//profil güncelle
+app.put("/api/updateProfile", isAuth, async (req, res) => {
+  const userId = req.session.user_id;
+  const {
+    userName,
+    userSurname,
+    userMail,
+    userPhone,
+    userAddress,
+    userType,
+    userNickname,
+  } = req.body;
+
+  // Gelen verilerin kontrolü
+  if (
+    !userName ||
+    !userSurname ||
+    !userMail ||
+    !userPhone ||
+    !userAddress ||
+    !userType ||
+    !userNickname
+  ) {
+    return res.status(400).json({ message: "Tüm alanları doldurunuz" });
+  }
+
+  try {
+    // Veritabanında kullanıcının profil bilgilerini güncelle
+    await db
+      .promise()
+      .query(
+        "UPDATE users SET user_name = ?, user_surname = ?, user_mail = ?, user_phone = ?, user_address = ?, user_type = ?, user_nickname = ? WHERE user_id = ?",
+        [
+          userName,
+          userSurname,
+          userMail,
+          userPhone,
+          userAddress,
+          userType,
+          userNickname,
+          userId,
+        ]
+      );
+
+    res.status(200).json({ message: "Profil bilgileri başarıyla güncellendi" });
+  } catch (error) {
+    console.error("Profil bilgileri güncellenirken hata oluştu:", error);
+    res.status(500).json({ message: "Sunucu hatası" });
+  }
 });
 
 app.listen(port, () => {

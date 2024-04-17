@@ -3,6 +3,7 @@ import "../css/proje.css";
 
 function MyProfile() {
   const [userData, setUserData] = useState({
+    user_id: "",
     userName: "",
     userSurname: "",
     userMail: "",
@@ -12,18 +13,10 @@ function MyProfile() {
     userNickname: "",
   });
 
-  const formFields = [
-    { label: "Ad", key: "userName", type: "text" },
-    { label: "Soyad", key: "userSurname", type: "text" },
-    { label: "Email", key: "userMail", type: "text" },
-    { label: "Telefon Numarası", key: "userPhone", type: "number" },
-    { label: "Adres", key: "userAddress", type: "text" },
-    { label: "Üyelik Türü", key: "userType", type: "text" },
-    { label: "Kullanıcı Adı", key: "userNickname", type: "text" },
-  ];
+  const [isEditable, setIsEditable] = useState(false); // Düzenleme durumu
+  const [editedFields, setEditedFields] = useState({}); // Değiştirilmiş alanlar
 
   useEffect(() => {
-    // Bu kısımda kullanıcının profil bilgilerini getiren bir API çağrısı yapmalısınız
     fetch("http://localhost:3001/api/profile", {
       method: "GET",
       credentials: "include",
@@ -33,21 +26,57 @@ function MyProfile() {
       .catch((error) => console.error("Profil bilgileri getirilemedi:", error));
   }, []);
 
+  const handleUpdate = async () => {
+    try {
+      const updatedUserData = { ...userData, ...editedFields };
+
+      const response = await fetch("http://localhost:3001/api/updateProfile", {
+        method: "PUT",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        credentials: "include",
+        body: JSON.stringify(updatedUserData),
+      });
+      const data = await response.json();
+      console.log(data.message); // API'den gelen yanıtı kontrol et
+      setIsEditable(false); // Düzenleme modunu kapat
+      setEditedFields({}); // Değiştirilmiş alanları sıfırla
+    } catch (error) {
+      console.error("Profil bilgileri güncellenirken hata oluştu:", error);
+    }
+  };
+
+  const handleEditToggle = () => {
+    setIsEditable(!isEditable); // Düzenleme durumunu tersine çevir
+  };
+
+  const handleFieldChange = (key, value) => {
+    setEditedFields({ ...editedFields, [key]: value });
+  };
+
   return (
     <div className="bodyBox">
       <form className="form">
         <h1 className="profileTitle">Profil Bilgileri</h1>
-        <hr></hr>
-        {formFields.map((field) => (
-          <div key={field.key}>
-            <label>{field.label}:</label>
+        <hr />
+        {Object.keys(userData).map((key) => (
+          <div key={key}>
+            <label>{key.charAt(0).toUpperCase() + key.slice(1)}:</label>
             <input
-              type={field.type}
-              value={userData ? userData[field.key] : ""}
-              disabled
+              type="text"
+              value={editedFields[key] || userData[key]}
+              onChange={(e) => handleFieldChange(key, e.target.value)}
+              disabled={key === "user_id" || !isEditable}
             />
           </div>
         ))}
+        <button
+          type="button"
+          onClick={isEditable ? handleUpdate : handleEditToggle}
+        >
+          {isEditable ? "Kaydet" : "Düzenle"}
+        </button>
       </form>
     </div>
   );

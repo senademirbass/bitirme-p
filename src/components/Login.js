@@ -29,7 +29,7 @@ const Login = ({ onLogin }) => {
         console.log(data.message);
 
         onLogin({
-          userId: data.userId,
+          userId: data.user_id,
           username: nickname,
         });
 
